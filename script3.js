@@ -42,6 +42,8 @@ let operation = ''
 let noHistory = false
 let noNum = true
 
+displayDOM.textContent = "0"
+
 function clear() {
     a = null
     b = null
@@ -49,6 +51,9 @@ function clear() {
 
     noHistory = false
     noNum = true
+
+    displayDOM.textContent = "0"
+    historyDOM.textContent = ""
 }
 
 allButtons.forEach(button => {
@@ -57,14 +62,15 @@ allButtons.forEach(button => {
     })
 })
 
-function enableComma() {
-    buttonComma.addEventListener('click', () => {
+buttonComma.addEventListener('click', () => {
+    if (displayDOM.textContent.indexOf('.') < 0)
         addNum(buttonComma.innerText)
-    }, {
-        once: true
-    })
+        noNum = false
+})
+
+function roundAnswer(inp) {
+    return inp.slice(0, 12)
 }
-enableComma()
 
 function addNum(x) {
     if (noHistory) {
@@ -76,12 +82,10 @@ function addNum(x) {
         noNum = false
     }
     displayDOM.textContent += x.toString()
+    displayDOM.textContent = roundAnswer(displayDOM.textContent)
     a = +displayDOM.textContent
 }
 
-function roundAnswer(inp) {
-    return +inp.slice(0, 12)
-}
 
 function equal() {
     let answer;
@@ -122,6 +126,7 @@ function operate(operator) {
     operation = operator
     b = a
     noNum = true
+
 
 }
 
