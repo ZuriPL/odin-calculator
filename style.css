@@ -71,3 +71,8 @@ body {
     grid-column: auto / span 2;
     background-color: hsl(49, 100%, 55%);
 }
+
+.btn-wide:hover {
+    grid-column: auto / span 2;
+    background-color: hsl(49, 95%, 70%);
+}
