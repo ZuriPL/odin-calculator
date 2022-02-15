@@ -16,6 +16,9 @@ const buttonMult = document.getElementById('mult')
 const buttonDiv = document.getElementById('div')
 const buttonEq = document.getElementById('equal')
 
+const buttonClear = document.getElementById('clear')
+const buttonDel = document.getElementById('delete')
+
 const displayDOM = document.getElementById('display')
 const historyDOM = document.getElementById('history')
 
@@ -32,24 +35,25 @@ const allButtons = [
     button9,
 ]
 
-let historySum = 0
+let a = null
+let b = null
+let operation = ''
+
+let noHistory = false
 let noNum = true
-let lastOperator;
 
-// function clear() {
-//     display = "0"
-//     history = ""
-//     historySum = 0
-//     noNum = true
-// }
+displayDOM.textContent = "0"
 
+function clear() {
+    a = null
+    b = null
+    operation = ''
 
-function addNum(x) {
-    if (noNum && x !== '.') {
-        displayDOM.textContent = ""
-        noNum = false
-    }
-    displayDOM.textContent += x.toString()
+    noHistory = false
+    noNum = true
+
+    displayDOM.textContent = "0"
+    historyDOM.textContent = ""
 }
 
 allButtons.forEach(button => {
@@ -58,61 +62,95 @@ allButtons.forEach(button => {
     })
 })
 
-function enableComma() {
-    buttonComma.addEventListener('click', () => {
+buttonComma.addEventListener('click', () => {
+    if (displayDOM.textContent.indexOf('.') < 0)
         addNum(buttonComma.innerText)
-    }, {
-        once: true
-    })
-}
-enableComma()
+        noNum = false
+})
 
-function equal(a, b, operator) {
-    if (operator == '+') {
-        lastOperator = '+'
-        return a + b
-    }
-    if (operator == '-') {
-        lastOperator = '-'
-        return a - b
-    }
-    if (operator == '*') {
-        lastOperator = '*'
-        return a * b
-    }
-    if (operator == '/') {
-        lastOperator = '/'
-        return a / b
-    }
-    return equal(a, b, lastOperator)
+function roundAnswer(inp) {
+    return inp.slice(0, 12)
 }
 
-function operation(operator) {
-    console.log(historySum)
+function addNum(x) {
+    if (noHistory) {
+        historyDOM.textContent = ''
+        noHistory = false
+    }
+    if (noNum && x !== '.') {
+        displayDOM.textContent = ""
+        noNum = false
+    }
+    displayDOM.textContent = roundAnswer(displayDOM.textContent + x)
+    a = +displayDOM.textContent
+}
+
+
+function equal() {
+    let answer;
+    if (operation == '+') {
+        answer = +roundAnswer('' + (b + a))
+    }
+    if (operation == '-') {
+        answer = +roundAnswer('' + (b - a))
+    }
+    if (operation == '*') {
+        answer = +roundAnswer('' + (b * a))
+    }
+    if (operation == '/') {
+        answer = +roundAnswer('' + (b / a))
+        if (a == 0) {
+            answer = "lmao"
+            noNum = true
+            a = null
+            b = null
+        }
+
+    }
+    displayDOM.textContent = answer
+    return answer
+}
+
+
+function operate(operator) {
+    if (noHistory) {
+        historyDOM.textContent = ''
+        noHistory = false
+    }
+    
     historyDOM.textContent += `${displayDOM.textContent} ${operator} `
-    let x = equal(+historySum, +displayDOM.textContent.toString(), operator)
-    displayDOM.textContent = x
-    historySum = x
-    if (operator == '='){
-        historySum = 0
+    if (a != null && b != null) {
+        a = equal()
     }
-
+    operation = operator
+    b = a
     noNum = true
-    enableComma()
+
+
 }
 
 buttonAdd.addEventListener('click', e => {
-    operation('+')
+    operate('+')
 })
 buttonSub.addEventListener('click', e => {
-    operation('-')
+    operate('-')
 })
 buttonMult.addEventListener('click', e => {
-    operation('*')
+    operate('*')
 })
 buttonDiv.addEventListener('click', e => {
-    operation('/')
+    operate('/')
 })
 buttonEq.addEventListener('click', e => {
-    operation('=')
+    historyDOM.textContent += `${displayDOM.textContent} = `
+    noHistory = true
+    equal()
+})
+
+buttonDel.addEventListener('click', e => {
+    displayDOM.textContent = displayDOM.textContent.slice(0, displayDOM.textContent.length - 1)
+    a = +displayDOM.textContent
+})
+buttonClear.addEventListener('click', e => {
+    clear()
 })
