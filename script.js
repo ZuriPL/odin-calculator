@@ -78,8 +78,11 @@ function addNum(x) {
         noHistory = false
     }
     if (noNum && x !== '.') {
-        displayDOM.textContent = ""
+        displayDOM.textContent = ""  
         noNum = false
+    }
+    if (displayDOM.textContent == '0') {
+        displayDOM.textContent = ''
     }
     displayDOM.textContent = roundAnswer(displayDOM.textContent + x)
     a = +displayDOM.textContent
@@ -149,6 +152,9 @@ buttonEq.addEventListener('click', e => {
 
 buttonDel.addEventListener('click', e => {
     displayDOM.textContent = displayDOM.textContent.slice(0, displayDOM.textContent.length - 1)
+    if (displayDOM.textContent == '') {
+        displayDOM.textContent = 0
+    }
     a = +displayDOM.textContent
 })
 buttonClear.addEventListener('click', e => {
