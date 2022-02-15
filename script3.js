@@ -81,8 +81,7 @@ function addNum(x) {
         displayDOM.textContent = ""
         noNum = false
     }
-    displayDOM.textContent += x.toString()
-    displayDOM.textContent = roundAnswer(displayDOM.textContent)
+    displayDOM.textContent = roundAnswer(displayDOM.textContent + x)
     a = +displayDOM.textContent
 }
 
@@ -90,16 +89,16 @@ function addNum(x) {
 function equal() {
     let answer;
     if (operation == '+') {
-        answer = roundAnswer('' + (b + a))
+        answer = +roundAnswer('' + (b + a))
     }
     if (operation == '-') {
-        answer = roundAnswer('' + (b - a))
+        answer = +roundAnswer('' + (b - a))
     }
     if (operation == '*') {
-        answer = roundAnswer('' + (b * a))
+        answer = +roundAnswer('' + (b * a))
     }
     if (operation == '/') {
-        answer = roundAnswer('' + (b / a))
+        answer = +roundAnswer('' + (b / a))
         if (a == 0) {
             answer = "lmao"
             noNum = true
