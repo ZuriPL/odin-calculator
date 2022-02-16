@@ -169,24 +169,15 @@ document.addEventListener('keydown', e => {
     if (e.key == '+') {
         operate('+')
     }
-
-})
-document.addEventListener('keydown', e => {
     if (e.key == '-') {
         operate('-')
     }
-})
-document.addEventListener('keydown', e => {
     if (e.key == '*') {
         operate('*')
     }
-})
-document.addEventListener('keydown', e => {
     if (e.key == '/') {
         operate('/')
     }
-})
-document.addEventListener('keydown', e => {
     if (e.key == '=' || e.key == 'Enter') {
         if (a != null && b != null) {
             historyDOM.textContent += `${displayDOM.textContent} = `
@@ -194,9 +185,6 @@ document.addEventListener('keydown', e => {
             equal()
         }
     }
-})
-
-document.addEventListener('keydown', e => {
     if (e.key == 'Backspace') {
         displayDOM.textContent = displayDOM.textContent.slice(0, displayDOM.textContent.length - 1)
         if (displayDOM.textContent == '') {
@@ -204,15 +192,12 @@ document.addEventListener('keydown', e => {
         }
             a = +displayDOM.textContent
     }
-})
-document.addEventListener('keydown', e => {
     if (e.key == 'Delete') {
         clear()
     }
-})
-document.addEventListener('keydown', e => {
-    let RegExp = /[0-9]/
-    if (RegExp.test(e.key) && e.key.length == 1) {
+    let RegExp2 = /[0-9]/
+    if (RegExp2.test(e.key) && e.key.length == 1) {
         addNum(+e.key)
     }
+
 })
