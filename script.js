@@ -145,9 +145,11 @@ buttonDiv.addEventListener('click', e => {
     operate('/')
 })
 buttonEq.addEventListener('click', e => {
-    historyDOM.textContent += `${displayDOM.textContent} = `
-    noHistory = true
-    equal()
+    if (a != null && b != null) {
+        historyDOM.textContent += `${displayDOM.textContent} = `
+        noHistory = true
+        equal()
+    }
 })
 
 buttonDel.addEventListener('click', e => {
@@ -185,10 +187,12 @@ document.addEventListener('keydown', e => {
     }
 })
 document.addEventListener('keydown', e => {
-    if (e.key == '+' || e.key == 'Enter') {
-        historyDOM.textContent += `${displayDOM.textContent} = `
-        noHistory = true
-        equal()
+    if (e.key == '=' || e.key == 'Enter') {
+        if (a != null && b != null) {
+            historyDOM.textContent += `${displayDOM.textContent} = `
+            noHistory = true
+            equal()
+        }
     }
 })
 
